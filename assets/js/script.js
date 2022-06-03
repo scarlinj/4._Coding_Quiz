@@ -1,3 +1,8 @@
+buttonEl.addEventListener("click", function() {
+	alert("button clicked");
+  });
+  
+
 var myTimer = function() {
 	if (time > 0) {
 		time = time - 1;
