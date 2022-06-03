@@ -1,3 +1,11 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+
 .app-title {
     font-size: 32px;
     font-weight: 800;
@@ -8,18 +16,19 @@
 body {
     font-family: 'Titillium Web', sans-serif;
     font-size: 16px;
+    background-color: #eff5f8;
 }
 
 .card-body {
     font-family: 'Titillium Web', sans-serif;
     font-size: 16px;
-    background-color: cornsilk;
+    background-color: rgb(107, 107, 107);
 }
 
 .card {
     font-family: 'Titillium Web', sans-serif;
     font-size: 16px;
-    background-color: cornsilk;
+    background-color: rgb(110, 71, 71);
 }
 
 h1 {
@@ -52,6 +61,7 @@ p {
 .column {
     float: left;
     width: 33%;
+    color: rgb(110, 71, 71);
 }
 
 /*Clear floats after the columns */
@@ -60,4 +70,22 @@ p {
     content: "";
     display: table;
     clear: both;
+}
+
+button {
+    background-color: #001b44;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2em;
+    letter-spacing: 0.21px;
+    line-height: 16px;
+    max-width: 255px;
+    padding: 20px 52px;
+    text-align: row;
+    transition-duration: 0.15s;
+    transition-property: background-color;
+    transition-timing-function: linear;
+    margin-top: 0.6em;
+    float: right; 
 }
