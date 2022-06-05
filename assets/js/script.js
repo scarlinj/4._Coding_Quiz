@@ -1,7 +1,10 @@
-buttonEl.addEventListener("click", function() {
-	alert("button clicked");
-  });
+// buttonEl.addEventListener("click", function() {
+// 	alert("Button clicked");
+//   });
   
+function pageContentEl (el) {
+	return document.querySelector(el);
+};
 
 var myTimer = function() {
 	if (time > 0) {
@@ -43,20 +46,20 @@ var recordsArray = [];
 
 // var randomQuestion = questions[Math.floor(math.random() * questions.length)];
 
-var pageContentEl = function(element) {
-	return document.querySelector(element);
-};
+// var pageContentEl = function(element) {
+// 	return document.querySelector(element);
+// };
 
-var myTimer = function() {
-	if (time > 0) {
-		time = time - 1;
-		pageContentEl('#time').innerHTML = time;
-	} else {
-		clearInterval(clock);
-		pageContentEl('#score').innerHTML = score;
-		onlyDisplaySection("#finish");
-	}
-};
+// var myTimer = function() {
+// 	if (time > 0) {
+// 		time = time - 1;
+// 		pageContentEl('#time').innerHTML = time;
+// 	} else {
+// 		clearInterval(clock);
+// 		pageContentEl('#score').innerHTML = score;
+// 		onlyDisplaySection("#finish");
+// 	}
+// };
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
 
@@ -91,13 +94,13 @@ var quizUpdate = function(answerCopy) {
 };
 
 //nth-of-type is working better than assigning an individual button id: https://www.w3schools.com/cssref/sel_nth-of-type.asp
-
+// questions must exist outside of the scope
 var setQuestionData = function() {
-	pageContentEl('#quizHolder p').innerHTML = questions[quizCount].title;
-	pageContentEl('#quizHolder button:nth-of-type(1)').innerHTML = `1. ${questions[quizCount].choices[0]}`;
-	pageContentEl('#quizHolder button:nth-of-type(2)').innerHTML = `2. ${questions[quizCount].choices[1]}`;
-	pageContentEl('#quizHolder button:nth-of-type(3)').innerHTML = `3. ${questions[quizCount].choices[2]}`;
-	pageContentEl('#quizHolder button:nth-of-type(4)').innerHTML = `4. ${questions[quizCount].choices[3]}`;
+	pageContentEl('#quizHolder p').innerHTML = questions[quizCount].question;
+	pageContentEl('#quizHolder button:nth-of-type(1)').innerHTML = `1. ${questions[quizCount].choices.a}`;
+	pageContentEl('#quizHolder button:nth-of-type(2)').innerHTML = `2. ${questions[quizCount].choices.b}`;
+	pageContentEl('#quizHolder button:nth-of-type(3)').innerHTML = `3. ${questions[quizCount].choices.c}`;
+	// pageContentEl('#quizHolder button:nth-of-type(4)').innerHTML = `4. ${questions[quizCount].choices[3]}`;
 };
 
 var scoreAlert = function() {
@@ -216,12 +219,12 @@ var recordsHtmlReset = function() {
 
 Array.from(answers).forEach(check => {check.addEventListener('click', scoreTimeAdjust);});
 
-pageContentEl("#intro button").addEventListener("click", startQuiz);
+pageContentEl("#startTime").addEventListener("click", startQuiz);
 
-pageContentEl("#records button").addEventListener("click", enterInitials);
+// pageContentEl("#recordsButton").addEventListener("click", enterInitials);
 
-pageContentEl("#clearScores").addEventListener("click", clearHighScores);
+// pageContentEl("#clearScores").addEventListener("click", clearHighScores);
 
-pageContentEl("#reset").addEventListener("click", quizReset);
+// pageContentEl("#reset").addEventListener("click", quizReset);
 
-pageContentEl("#scores").addEventListener("click", viewHighScores);
+// pageContentEl("#scores").addEventListener("click", viewHighScores);

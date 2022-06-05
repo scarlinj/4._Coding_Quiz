@@ -9,12 +9,12 @@ function countdown() {
 
 }
 
-var liveQuestions = [
-    {
-                question: "What are the three first languages of this course?",
-                choices: ["HTML, CSS, Javascript", "Hotmail, Fandango, Gmail", "Spanish, English, German"],
-                answer: "HTML, CSS, Javascript"
-                },
+var questions = [
+    // {
+    //             question: "What are the three first languages of this course?",
+    //             choices: ["HTML, CSS, Javascript", "Hotmail, Fandango, Gmail", "Spanish, English, German"],
+    //             answer: "HTML, CSS, Javascript"
+    //             },
             //     answer: 'a'
             // },
 
@@ -75,5 +75,5 @@ var questionsDiv = document.querySelector("#questionsDiv");
 var wrapper = document.querySelector("#wrapper");
 
 timer.addEventListener("click", function () {
-    if ()
-})
+    // if ()
+});
