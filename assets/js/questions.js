@@ -1,3 +1,14 @@
+var timerEl = document.getElementById('countdown');
+var mainEl = document.getElementById('main');
+var menu = document.getElementById('menu');
+
+
+function countdown() {
+    var timeLeft = 60;
+
+
+}
+
 var liveQuestions = [
     {
                 question: "What are the three first languages of this course?",
