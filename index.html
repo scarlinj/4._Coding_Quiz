@@ -28,13 +28,13 @@
     <header class="app-header">
 
         <div class="col-12 col-md-4">
-            <h1 class="app-title">Super Cool Coding Quiz</h1>
+            <h1 class="app-title">Stephen's Super Cool Coding Quiz</h1>
 
     </header>
 
 
 <article class="container">
-    <button class="btn btn-secondary" id="btn">Begin Quiz</button>
+    <button class="btn btn-secondary" id="btn">Start Quiz</button>
 </article>
 <br><br>
 
@@ -48,7 +48,7 @@
     <button id="opt3" class="user-answer btn btn-outline-primary" data-value="3"></button>
     <button id="opt4" class="user-answer btn btn-outline-primary" data-value="4"></button>
     <div class="container">
-        <em class="text-muted" id="right-wrong"></em>
+        <em class="text-muted" id="questionResults"></em>
        
     </div>
 
@@ -63,7 +63,7 @@
 
     <section id="end-results" class="container">
         <h5 id="final-score"></h5>
-     <label>Enter Your Name or Initials</label>
+     <label>Enter Your Initials</label>
      <input id="user-initials" />
      <button id="save-initials">Save</button>
     </section>
@@ -71,7 +71,7 @@
 <table class="container text-center" id="all-scores">
 </table>
 
-    <script src="./script.js"></script>
+
 </body>
 
 
@@ -90,9 +90,10 @@
     </main>
 
 <!-- load questions first, so that the qustions variable is accessable to every script afterwards -->
-    <script src="assets/js/questions.js"></script>
-    <script src="assets/js/script.js"></script>
+    <!-- <script src="assets/js/questions.js"></script>
+    <script src="assets/js/script.js"></script> -->
 
+    <script src="./assets/js/script.js"></script>
 
 </body>
 

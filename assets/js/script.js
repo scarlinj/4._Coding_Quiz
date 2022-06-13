@@ -1,230 +1,132 @@
-// buttonEl.addEventListener("click", function() {
-// 	alert("Button clicked");
-//   });
-  
-function pageContentEl (el) {
-	return document.querySelector(el);
+var startQuiz = document.querySelector("#btn")
+var quizArea = document.getElementById("quizarea")
+var question = document.getElementById("question")
+var button1 = document.getElementById("option1")
+var button2 = document.getElementById("option2")
+var button3 = document.getElementById("option3")
+var button4 = document.getElementById("option4")
+var results = document.getElementById("questionResults")
+var currentQuestion = 0
+var grade = 0
+var endResults = document.getElementById("end-results")
+var userInitials = document.getElementById("user-initials")
+var saveInitials = document.getElementById("save-initials")
+
+var timer = 60;
+var timerObject;
+var counter = document.getElementById("counter")
+
+quizArea.style.display = "none"
+endResults.style.display = "none"
+
+var startBtnHandler = function () {
+    counter.textContent = "Time Left: " + timer + "s"
+ 
+    timerObject = setInterval(function () {
+        counter.textContent = "Time Left: " + timer + "s"
+        
+        if(timer > 0) {
+            timer--;
+        } else {
+            clearInterval(timerObject)
+            counter.textContent = "Time's up!"
+            displayResults()
+        }
+    },1000)
+    startQuiz.style.display = "none"
+    quizArea.style.display = "block"
+    displayQuestion();
 };
 
-var myTimer = function() {
-	if (time > 0) {
-		time = time - 1;
-		pageContentEl('#time').innerHTML = time;
-	} else {
-		clearInterval(clock);
-		pageContentEl('#score').innerHTML = score;
-		onlyDisplaySection("#finish");
-	}
-};
 
-function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
-    function showQuestions(questions, quizContainer){
-        var output = [];
-        var answers;
+
+
+var questionlist = [ 
+    {
+        q:"1) Which of the following is not a JavaScript framework?",
+        c:["Node","Vue","Ruby","React"],
+        a:3
+    },
+    {
+        q:"2) What symbol is used to signify comments in JavaScript?",
+        c:["/* */","//","#","$ $"],
+        a:2
+    },
+    {
+        q:"3) The argument of a function is written inside of which pair of symbols?",
+        c:["' '","( )","{ }","[ ]"],
+        a:2
+    }, {
+        q:"4) The use of [ ] signifies which type of data storage?",
+        c:["object","array","constant","list"],
+        a:2
+    },
+    {
+        q:"5) What does '&&' mean?",
+        c:["and","or","for all","&& doesn't exist in JavaScript"],
+        a:1
+    }
+]
+
+function displayQuestion () {
+    question.textContent = questionlist[currentQuestion].q
+    button1.textContent = questionlist[currentQuestion].c[0]
+    button2.textContent = questionlist[currentQuestion].c[1]
+    button3.textContent = questionlist[currentQuestion].c[2]
+    button4.textContent = questionlist[currentQuestion].c[3]
+}
+
+function optionHandler() {
+    var userValue = this.getAttribute("data-value")
+    if (userValue == questionlist[currentQuestion].a) {
+        result.textContent = "Correct";
+        grade += 10;
+    } else{
+        result.textContent = "Wrong";
+        timer -= 10;
     }
 
-    function showResults(questions, quizContainer, resultsContainer){
-
+    if(currentQuestion < questionlist.length - 1) {
+        currentQuestion ++;
+        displayQuestion()
+    } else{
+        clearInterval(timerObject)
+        counter.textContent = "You've completed the quiz!"
+        displayResults()
     }
+}
 
-    showQuestions(questions, quizContainer);
 
-    submitButton.onclick = function() {
-        showResults(questions, quizContainer, resultsContainer);
+
+function displayResults() {
+    endResults.style.display = "block"
+    quizArea.style.display = "none"
+    document.querySelector("#final-score").textContent = "Your final score is " + grade + "."
+}
+
+
+
+function saveScores() {
+    var userScores = JSON.parse(localStorage.getItem("initials")) || []
+    var user = document.getElementById("user-initials").value
+    userScores.push({user:user,score:grade})
+    localStorage.setItem("initials", JSON.stringify(userScores))
+    endResults.style.display = "none"
+    var allScores = ""
+    for (let i = 0; i < userScores.length; i++) {
+        allScores += `<h6> ${userScores[i].user} scored ${userScores[i].score}/50 </h6>`
     }
-};
-
-var initialTime = 50;
-var time = 50;
-var score = 0;
-var quizCount = 0;
-var setTime;
-var answers = document.querySelectorAll('#quizHolder button');
-var clock;
-var recordsArray = [];
+    
+    document.getElementById("all-scores").innerHTML = allScores
+    counter.textContent = "ALL SCORES"
+}
 
 
-// var randomQuestion = questions[Math.floor(math.random() * questions.length)];
 
-// var pageContentEl = function(element) {
-// 	return document.querySelector(element);
-// };
 
-// var myTimer = function() {
-// 	if (time > 0) {
-// 		time = time - 1;
-// 		pageContentEl('#time').innerHTML = time;
-// 	} else {
-// 		clearInterval(clock);
-// 		pageContentEl('#score').innerHTML = score;
-// 		onlyDisplaySection("#finish");
-// 	}
-// };
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
-
-var onlyDisplaySection = function(element) {
-	let sections = document.querySelectorAll("section");
-	Array.from(sections).forEach(function(userItem) {
-		userItem.classList.add('hide');
-	});
-	pageContentEl(element).classList.remove('hide');
-};
-
-var quizUpdate = function(answerCopy) {
-	pageContentEl('#scoreAlert p').innerHTML = answerCopy;
-	pageContentEl('#scoreAlert').classList.remove('invisible', scoreAlert());
-	Array.from(answers).forEach(answer =>
-	{
-		answer.classList.add('disable');
-	});
-
-	setTimeout(function() {
-		if (quizCount === questions.length) {
-			onlyDisplaySection("#finish");
-			time = 0;
-			pageContentEl('#time').innerHTML = time;
-		} else {
-			setQuestionData();
-			Array.from(answers).forEach(answer => {
-				answer.classList.remove('disable');
-			});
-		}
-	}, 1000);
-};
-
-//nth-of-type is working better than assigning an individual button id: https://www.w3schools.com/cssref/sel_nth-of-type.asp
-// questions must exist outside of the scope
-var setQuestionData = function() {
-	pageContentEl('#quizHolder p').innerHTML = questions[quizCount].question;
-	pageContentEl('#quizHolder button:nth-of-type(1)').innerHTML = `1. ${questions[quizCount].choices.a}`;
-	pageContentEl('#quizHolder button:nth-of-type(2)').innerHTML = `2. ${questions[quizCount].choices.b}`;
-	pageContentEl('#quizHolder button:nth-of-type(3)').innerHTML = `3. ${questions[quizCount].choices.c}`;
-	// pageContentEl('#quizHolder button:nth-of-type(4)').innerHTML = `4. ${questions[quizCount].choices[3]}`;
-};
-
-var scoreAlert = function() {
-	clearTimeout(setTime);
-	setTime = setTimeout(function() {
-		pageContentEl('#scoreAlert').classList.add('invisible');
-	}, 1000);
-};
-
-var errorAlert = function() {
-	clearTimeout(setTime);
-	setTime = setTimeout(function() {
-		pageContentEl('#errorAlert').classList.add('invisible');
-	}, 3000);
-};
-
-var enterInitials = function() {
-	let initialsRecord = pageContentEl('#initials').value;
-	if (initialsRecord === ''){
-		pageContentEl('#errorAlert p').innerHTML = "You need at least 1 character";
-		pageContentEl('#errorAlert').classList.remove('invisible', errorAlert());
-	} else if (initialsRecord.match(/[[A-Za-z]/) === null) {
-		pageContentEl('#errorAlert p').innerHTML = "Only letters for initials allowed.";
-		pageContentEl('#errorAlert').classList.remove('invisible', errorAlert());
-	} else if (initialsRecord.length > 5) {
-		pageContentEl('#errorAlert p').innerHTML = "Maximum of 5 characters allowed.";
-		pageContentEl('#errorAlert').classList.remove('invisible', errorAlert());
-	} else {
-		recordsArray.push({
-			"initialRecord": initialsRecord,
-			"score": score
-		});
-		
-		localStorage.setItem('recordsArray', JSON.stringify(recordsArray));
-		pageContentEl('#highScores div').innerHTML = '';
-		onlyDisplaySection("#highScores");
-		recordsHtmlReset();
-		pageContentEl("#initials").value = '';
-		}
-};
-
-var clearHighScores = function () {
-	recordsArray = [];
-	pageContentEl('#highScores div').innerHTML = "";
-	localStorage.removeItem('recordsArray');
-};
-
-var quizReset = function () {
-	time = initialTime;
-	score = 0;
-	quizCount = 0;
-	onlyDisplaySection("#intro");
-};
-
-var startQuiz = function () {
-    setQuestionData();
-	onlyDisplaySection("#quizHolder");
-	clock = setInterval(myTimer, 1000);
-};
-
-// https://teamtreehouse.com/community/dont-understand-the-meaning-of-functione
-
-// https://stackoverflow.com/questions/35936365/what-exactly-is-the-parameter-e-event-and-why-pass-it-to-javascript-functions
-
-var viewHighScores = function (e) {
-	e.preventDefault();
-	clearInterval(clock);
-	pageContentEl('#time').innerHTML = 0;
-	time = initialTime;
-	score = 0;
-	quizCount = 0;
-	onlyDisplaySection("#highScores");
-	recordsHtmlReset();
-};
-
-var scoreTimeAdjust = function () {
-	if (this.innerHTML.substring(3, this.length) === questions[quizCount].answer) {
-		score = score + 1;
-		quizCount = quizCount + 1;
-		quizUpdate("Correct");
-	}else{
-		time = time - 5;
-		quizCount = quizCount + 1;
-		quizUpdate("Incorrect");
-	}
-};
-
-// https://www.w3schools.com/js/js_arrow_function.asp
-
-var recordsHtmlReset = function() {
-	pageContentEl('#highScores div').innerHTML = "";
-	let i = 1;
-	recordsArray.sort((a, b) => b.score - a.score);
-	Array.from(recordsArray).forEach(check =>
-	{
-		var scores = document.createElement("div");
-		scores.innerHTML = i + ". " + check.initialRecord + " - " + check.score;
-		pageContentEl('#highScores div').appendChild(scores);
-		i = i + 1;
-	});
-	i = 0;
-	Array.from(answers).forEach(answer => {
-		answer.classList.remove('disable');
-	});
-};
-
-// found where I can use ? in lieu of an if statement: https://medium.com/javascript-in-plain-english/what-does-the-question-mark-mean-in-javascript-code-353cfadcf760
-
-// https://www.geeksforgeeks.org/ternary-operator-question-mark-and-colon-in-javascript/
-
-// condition ? value if true : value if false
-
-(localStorage.getItem('recordsArray')) ? recordsArray = JSON.parse(localStorage.getItem('recordsArray')): recordsArray = [];
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
-
-Array.from(answers).forEach(check => {check.addEventListener('click', scoreTimeAdjust);});
-
-pageContentEl("#startTime").addEventListener("click", startQuiz);
-
-// pageContentEl("#recordsButton").addEventListener("click", enterInitials);
-
-// pageContentEl("#clearScores").addEventListener("click", clearHighScores);
-
-// pageContentEl("#reset").addEventListener("click", quizReset);
-
-// pageContentEl("#scores").addEventListener("click", viewHighScores);
+startQuiz.addEventListener("click", startBtnHandler)
+button1.addEventListener("click", optionHandler)
+button2.addEventListener("click", optionHandler)
+button3.addEventListener("click", optionHandler)
+button4.addEventListener("click", optionHandler)
+saveInitials.addEventListener("click", saveScores)
