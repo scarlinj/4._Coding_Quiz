@@ -43,28 +43,28 @@ var startBtnHandler = function () {
 
 var questionlist = [ 
     {
-        q:"1) Which of the following is not a JavaScript framework?",
-        c:["Node","Vue","Ruby","React"],
+        q:"1) How would you connect a CSS file to an HTML page?",
+        c:["Install the CSS in your browser","Click the button to attach CSS to HTML","Add the tag for the script in your HTML to include src=","Install the CSS file"],
         a:3
     },
     {
-        q:"2) What symbol is used to signify comments in JavaScript?",
-        c:["/* */","//","#","$ $"],
-        a:2
+        q:"2) What element in your HTML allows you to create a list?",
+        c:["<li></li>","<ol></ol>","#Both a and b","$"],
+        a:3
     },
     {
-        q:"3) The argument of a function is written inside of which pair of symbols?",
+        q:"3) How would you add an entire list item, listItemEl, to a list?",
         c:["' '","( )","{ }","[ ]"],
         a:2
     }, {
         q:"4) The use of [ ] signifies which type of data storage?",
-        c:["object","array","constant","list"],
+        c:[".createChild(listItemEl)",".appendChild(listItemEl);","./(listItemEl)",".connectTheList(listItemEl);"],
         a:2
     },
     {
-        q:"5) What does '&&' mean?",
-        c:["and","or","for all","&& doesn't exist in JavaScript"],
-        a:1
+        q:"5) If you create a function within curly braces {} for another function, what happens when you reference that function outside of the parent function?",
+        c:["The program will locate the function as normal.","The program to break because it cannot find a variable with that name.","The program will tell you to try again.","Nothing will happen."],
+        a:2
     }
 ]
 
