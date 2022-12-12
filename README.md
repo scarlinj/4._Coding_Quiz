@@ -21,7 +21,7 @@ No installation necessary.  Open the page directly in your browser.
 
 ### Usage
 Answer questions by clicking the choice you think is correct.  The site will log your choice and tally points for the questions you answered correctly.
-Link to deployed app: https://scarlinj.github.io/Challenge_4-Coding_Quiz/
+Link to deployed app: https://scarlinj.github.io/Coding_Quiz/
 
 ### License
 ![GitHub license](https://img.shields.io/badge/license-MIT-green.svg)
